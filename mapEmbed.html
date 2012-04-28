@@ -21,18 +21,19 @@
 </head>
 
 <body>
- <div id="mapContainer"></div>
- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-  <script src="http://maps.google.com/maps?file=api&amp;v=3&amp;sensor=true&amp;key=AIzaSyCp-TZZSMbTXT_QgV_ZI7LxYFgYaAwPSjU" type="text/javascript"></script>
+<div id="mapContainer"></div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script src="http://maps.google.com/maps?file=api&amp;v=3&amp;sensor=true&amp;key=AIzaSyCp-TZZSMbTXT_QgV_ZI7LxYFgYaAwPSjU" type="text/javascript"></script>
 
  
- <script>
- window.onload = function() {
-    map = new GMap2(document.getElementById('mapContainer'));
-      map.setCenter(new GLatLng(37.4419, -122.1419), 13);
-      map.setUIToDefault();
- };
-  </script>
+<script>
+window.onload = function() {
+	map = new GMap2(document.getElementById('mapContainer'));
+	map.setCenter(new GLatLng(37.4419, -122.1419), 13);
+	map.setUIToDefault();
+	
+};
+</script>
 
 
 </body>
