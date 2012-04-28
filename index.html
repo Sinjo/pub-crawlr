@@ -145,16 +145,18 @@ function drawRoute(results) {
 function drawMarkers(results) {
 	for (var i=0; i < results.length-1; i++) {
 		var place = results[i];
-		createMarker(results[i]);
+		createMarker(results[i], i+1);
 	}
 }
 
-function createMarker(place) {
+function createMarker(place, placeNumber) {
 	var placeLoc = place.geometry.location;
+	var markerIcon = new google.maps.MarkerImage("http://www.googlemapsmarkers.com/v1/" + placeNumber + "/009900/");
 	var marker = new google.maps.Marker({
 		map: map,
 		position: place.geometry.location,
-		title: place.title
+		title: place.title,
+		icon: markerIcon
 	});
   markers.push(marker);
 
