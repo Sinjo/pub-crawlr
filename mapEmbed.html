@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+
+<head>
+	<style>
+    body {
+      margin: 0 5px 25px 5px;
+      font: 100% normal 'Yanone Kaffeesatz', 'Lucida Grande', 'Trebuchet MS', Verdana, sans-serif;
+      text-align: center;
+      color: #999;
+      height: 90%;
+    }
+     #mapContainer {
+      width: 100%;
+      height: 90%;
+      border: 1px solid black;
+      text-align: left;
+    }
+    </style>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCp-TZZSMbTXT_QgV_ZI7LxYFgYaAwPSjU&libraries=places&sensor=false"></script>
+<script type="text/javascript">
+var isaacs;
+var map;
+var infowindow;
+var markers = [];
+
+var directionsDisplay = new google.maps.DirectionsRenderer();
+var directionsServiceGgl = new google.maps.DirectionsService();
+
+function initialize() {
+  
+
+	isaacs = new google.maps.LatLng(52.052741,1.161654);
+	
+	map = new google.maps.Map(document.getElementById('mapContainer'), {
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		center: isaacs,
+		zoom: 15
+	});
+	
+	
+}
+
+
+
+function search() {
+  var addressField = document.getElementById('search_address');
+  var geocoder = new google.maps.Geocoder();
+    geocoder.geocode(
+        {'address': addressField.value}, 
+        function(results, status) { 
+            if (status == google.maps.GeocoderStatus.OK) { 
+                var loc = results[0].geometry.location;
+                map.setCenter(loc);
+                var placesSearchRequest = {
+                 location: loc,
+                 types: ['bar'],
+				         rankBy: google.maps.places.RankBy.DISTANCE
+                };
+  
+              infowindow = new google.maps.InfoWindow();
+
+              var placesService = new google.maps.places.PlacesService(map);
+              placesService.search(placesSearchRequest, placesCallback);
+
+
+            } 
+            else {
+                alert("Not found: " + status); 
+            } 
+        }
+    );
+};
+
+function checkEnterPressed(evt) {
+        evt = (evt) ? evt : ((window.event) ? window.event : "")
+        if (evt) {
+            // process event here
+            if ( evt.keyCode==13 || evt.which==13 ) {
+                
+                search();
+            }
+        }
+    }
+
+
+function placesCallback(results, status) {
+	if (status == google.maps.places.PlacesServiceStatus.OK) {
+		drawRoute(results.slice(0,9));
+	}
+}
+
+function drawRoute(results) {
+	directionsDisplay.setMap(map);
+	var start = new google.maps.LatLng(
+		results[0].geometry.location.lat(), results[0].geometry.location.lng());
+		
+	var end = new google.maps.LatLng(
+		results[results.length-1].geometry.location.lat(),results[results.length-1].geometry.location.lng());
+		
+	var waypts = [];
+	// Taking the waypoints as the 2nd value and 2nd from last value of the results array
+	for (var i=1; i < results.length-1; i++) {
+		waypts.push({
+			location: new google.maps.LatLng(results[i].geometry.location.lat(), results[i].geometry.location.lng()),
+			stopover:true
+		});
+	}
+	
+	var request = {
+		origin:start, 
+		destination:end,
+		waypoints: waypts,
+		optimizeWaypoints:true,
+		travelMode: google.maps.DirectionsTravelMode.WALKING
+	};
+	
+	directionsServiceGgl.route(request, function(response, status) {
+		if (status == google.maps.DirectionsStatus.OK) {
+			directionsDisplay.setDirections(response);
+			}
+		else {
+			alert(status)
+		}
+	});
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head>
+
+<body>
+<h1>Pubcrawlr Map</h1>
+ <input type="text" id="search_address" value="" onkeypress="checkEnterPressed(event)"/>
+ <button onclick="search();">Search</button>
+
+<div id="mapContainer"></div>
+
+</body>
+
+</html>
