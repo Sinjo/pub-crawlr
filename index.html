@@ -172,9 +172,11 @@ function drawRoute(results) {
 			
 			summaryPanel = document.getElementById("directions_panel");
 			summaryPanel.innerHTML = "";
-			  
+			 
+			console.log(response.routes[0].waypoint_order);
+			
 			// CHANGES
-			drawMarkers(results);
+			drawMarkers(results, response.routes[0].waypoint_order, start, end);
 			//
 			
 			}
@@ -185,10 +187,18 @@ function drawRoute(results) {
 }
 
 // CHANGES
-function drawMarkers(results) {
+function drawMarkers(results, waypoint_order, start, end) {
 	for (var i=0; i < results.length; i++) {
-		var place = results[i];
-		createMarker(results[i], i+1);
+		var place;
+		if (i === 0) {
+			place = results[i];
+		} else if (i === 9) {
+			place = results[i];
+		} else {
+			console.log(waypoint_order[i-1])
+			place = results[waypoint_order[i-1] +1];
+		}
+		createMarker(place, i+1);
 	}
 }
 
