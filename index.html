@@ -46,6 +46,9 @@ function initialize() {
 
 
 function search() {
+
+	deleteOverlays();
+	
   var addressField = document.getElementById('search_address');
   var geocoder = new google.maps.Geocoder();
     geocoder.geocode(
@@ -94,6 +97,12 @@ function placesCallback(results, status) {
 
 function drawRoute(results) {
 	directionsDisplay.setMap(map);
+	
+	// CHANGES
+	directionsDisplay.suppressMarkers = true;
+	//
+	
+	
 	var start = new google.maps.LatLng(
 		results[0].geometry.location.lat(), results[0].geometry.location.lng());
 		
@@ -120,12 +129,67 @@ function drawRoute(results) {
 	directionsServiceGgl.route(request, function(response, status) {
 		if (status == google.maps.DirectionsStatus.OK) {
 			directionsDisplay.setDirections(response);
+			
+			// CHANGES
+			drawMarkers(results);
+			//
+			
 			}
 		else {
 			alert(status)
 		}
 	});
 }
+
+// CHANGES
+function drawMarkers(results) {
+	for (var i=0; i < results.length-1; i++) {
+		var place = results[i];
+		createMarker(results[i]);
+	}
+}
+
+function createMarker(place) {
+	var placeLoc = place.geometry.location;
+	var marker = new google.maps.Marker({
+		map: map,
+		position: place.geometry.location,
+		title: place.title
+	});
+  markers.push(marker);
+
+	google.maps.event.addListener(marker, 'click', function() {
+		var contentString = place.name + " </br>" + place.vicinity;
+		infowindow.setContent(contentString);
+		infowindow.open(map, this);
+	});
+}
+
+// Sets the map on all markers in the array.
+function setAllMap(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the overlays from the map, but keeps them in the array.
+function clearOverlays() {
+  setAllMap(null);
+}
+
+ // Deletes all markers in the array by removing references to them.
+function deleteOverlays() {
+  clearOverlays();
+  markers = [];
+}
+
+function attachInstructionText(marker, text) {
+  google.maps.event.addListener(marker, 'click', function() {
+    stepDisplay.setContent(text);
+    stepDisplay.open(map, marker);
+  });
+}
+// 
 
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>
