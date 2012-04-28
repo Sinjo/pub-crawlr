@@ -24,6 +24,9 @@
 var isaacs;
 var map;
 var infowindow;
+var markers = [];
+
+
 
 function initialize() {
   
@@ -42,6 +45,7 @@ function initialize() {
 
 
 function search() {
+  deleteOverlays();
   var addressField = document.getElementById('search_address');
   var geocoder = new google.maps.Geocoder();
     geocoder.geocode(
@@ -87,11 +91,30 @@ function createMarker(place) {
 		map: map,
 		position: place.geometry.location
 	});
+  markers.push(marker);
 
 	google.maps.event.addListener(marker, 'click', function() {
 		infowindow.setContent(place.name);
 		infowindow.open(map, this);
 	});
+}
+
+// Sets the map on all markers in the array.
+function setAllMap(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
+
+// Removes the overlays from the map, but keeps them in the array.
+function clearOverlays() {
+  setAllMap(null);
+}
+
+ // Deletes all markers in the array by removing references to them.
+function deleteOverlays() {
+  clearOverlays();
+  markers = [];
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
