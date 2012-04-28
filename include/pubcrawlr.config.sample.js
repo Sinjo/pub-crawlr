@@ -3,7 +3,7 @@ pubcrawlr = {};
 pubcrawlr.config = {
 	
 	// Settings related to Google API
-	google = {
+	google : {
 		// Your Google OAuth Client ID
 		client_id: "somedigits.apps.googleusercontent.com",
 		
