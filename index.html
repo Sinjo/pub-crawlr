@@ -74,6 +74,17 @@ function search() {
     );
 };
 
+function checkEnterPressed(evt) {
+        evt = (evt) ? evt : ((window.event) ? window.event : "")
+        if (evt) {
+            // process event here
+            if ( evt.keyCode==13 || evt.which==13 ) {
+                
+                search();
+            }
+        }
+    }
+
 
 function placesCallback(results, status) {
 	if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -122,7 +133,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 <body>
 <h1>Pubcrawlr Map</h1>
- <input type="text" id="search_address" value=""/>
+ <input type="text" id="search_address" value="" onkeypress="checkEnterPressed(event)"/>
  <button onclick="search();">Search</button>
 
 <div id="mapContainer"></div>
