@@ -159,7 +159,7 @@ function createMarker(place) {
   markers.push(marker);
 
 	google.maps.event.addListener(marker, 'click', function() {
-		var contentString = place.name + " </br>" + place.vicinity;
+		var contentString = "<b>" + place.name + "</b>" + "<br>" + place.vicinity;
 		infowindow.setContent(contentString);
 		infowindow.open(map, this);
 	});
