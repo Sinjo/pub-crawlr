@@ -154,7 +154,7 @@ function drawMarkers(results) {
 
 function createMarker(place, placeNumber) {
 	var placeName = place.name;
-	summaryPanel.innerHTML += "<b> " + placeName + "</b><br />";
+	summaryPanel.innerHTML += "<b> " + placeNumber + ") " + placeName + "</b>" + " - " + place.vicinity + "<br />";
 	var placeLoc = place.geometry.location;
 	var markerIcon = new google.maps.MarkerImage("http://www.googlemapsmarkers.com/v1/" + placeNumber + "/009900/");
 	var marker = new google.maps.Marker({
