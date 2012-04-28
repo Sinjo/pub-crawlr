@@ -23,16 +23,18 @@
 <body>
 <div id="mapContainer"></div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-<script src="http://maps.google.com/maps?file=api&amp;v=3&amp;sensor=true&amp;key=AIzaSyCp-TZZSMbTXT_QgV_ZI7LxYFgYaAwPSjU" type="text/javascript"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyCp-TZZSMbTXT_QgV_ZI7LxYFgYaAwPSjU&sensor=false" type="text/javascript"></script>
 
  
 <script>
 window.onload = function() {
 	var isaacs = new google.maps.LatLng(52.052741,1.161654);
 	
-	map = new GMap2(document.getElementById('mapContainer'));
-	map.setCenter(isaacs, 13);
-	map.setUIToDefault();
+	map = new google.maps.Map(document.getElementById('mapContainer'), {
+		mapTypeId: google.maps.MapTypeId.ROADMAP,
+		center: isaacs,
+		zoom: 15
+    });
 	
 };
 </script>
