@@ -60,7 +60,7 @@ function search() {
                 var placesSearchRequest = {
                  location: loc,
                  types: ['bar'],
-				         rankBy: google.maps.places.RankBy.DISTANCE
+				 rankBy: google.maps.places.RankBy.DISTANCE
                 };
   
               infowindow = new google.maps.InfoWindow();
@@ -161,7 +161,8 @@ function createMarker(place, placeNumber) {
 		map: map,
 		position: place.geometry.location,
 		title: place.name,
-		icon: markerIcon
+		icon: markerIcon,
+		animation: google.maps.Animation.DROP
 	});
   markers.push(marker);
 
