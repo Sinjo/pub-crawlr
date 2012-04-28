@@ -28,8 +28,10 @@
  
 <script>
 window.onload = function() {
+	var isaacs = new google.maps.LatLng(52.052741,1.161654);
+	
 	map = new GMap2(document.getElementById('mapContainer'));
-	map.setCenter(new GLatLng(37.4419, -122.1419), 13);
+	map.setCenter(isaacs, 13);
 	map.setUIToDefault();
 	
 };
