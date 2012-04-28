@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+
+<head>
+	<style>
+    body {
+      margin: 0 5px 25px 5px;
+      font: 100% normal 'Yanone Kaffeesatz', 'Lucida Grande', 'Trebuchet MS', Verdana, sans-serif;
+      text-align: center;
+      color: #999;
+      height: 90%;
+    }
+     #mapContainer {
+      width: 100%;
+      height: 90%;
+      border: 1px solid black;
+      text-align: left;
+    }
+    </style>
+ <h1>Pubcrawlr Map</h1>
+</head>
+
+<body>
+ <div id="mapContainer"></div>
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+  <script src="http://maps.google.com/maps?file=api&amp;v=3&amp;sensor=true&amp;key=AIzaSyCp-TZZSMbTXT_QgV_ZI7LxYFgYaAwPSjU" type="text/javascript"></script>
+
+ 
+ <script>
+ window.onload = function() {
+    map = new GMap2(document.getElementById('mapContainer'));
+      map.setCenter(new GLatLng(37.4419, -122.1419), 13);
+      map.setUIToDefault();
+ };
+  </script>
+
+
+</body>
+
+</html>
