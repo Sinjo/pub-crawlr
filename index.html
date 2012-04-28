@@ -50,7 +50,17 @@ function search() {
 	deleteOverlays();
 	
   var addressField = document.getElementById('search_address');
-  var geocoder = new google.maps.Geocoder();
+  var selectCriteria = document.getElementById('searchCriteria').value;
+  if(selectCriteria == 'DISTANCE'){
+  	searchByDistance(addressField);
+  }
+  else
+  	searchByProminence(addressField);
+};
+
+function searchByDistance(addressField){
+var geocoder = new google.maps.Geocoder();
+   
     geocoder.geocode(
         {'address': addressField.value}, 
         function(results, status) { 
@@ -75,7 +85,37 @@ function search() {
             } 
         }
     );
-};
+}
+
+function searchByProminence(addressField){
+	var geocoder = new google.maps.Geocoder();
+   
+    geocoder.geocode(
+        {'address': addressField.value}, 
+        function(results, status) { 
+            if (status == google.maps.GeocoderStatus.OK) { 
+                var loc = results[0].geometry.location;
+                map.setCenter(loc);
+                var placesSearchRequest = {
+                 location: loc,
+                 types: ['bar'],
+                 radius: 2000,
+				 rankBy: google.maps.places.RankBy.PROMINENCE
+                };
+  
+              infowindow = new google.maps.InfoWindow();
+
+              var placesService = new google.maps.places.PlacesService(map);
+              placesService.search(placesSearchRequest, placesCallback);
+
+
+            } 
+            else {
+                alert("Not found: " + status); 
+            } 
+        }
+    );
+}
 
 function checkEnterPressed(evt) {
         evt = (evt) ? evt : ((window.event) ? window.event : "")
@@ -200,6 +240,12 @@ google.maps.event.addDomListener(window, 'load', initialize);
 <h1>Pubcrawlr Map</h1>
  <input type="text" id="search_address" value="" onkeypress="checkEnterPressed(event)"/>
  <button onclick="search();">Search</button>
+
+
+<select id="searchCriteria">
+<option value="DISTANCE" selected="selected">Distance</option>
+<option value="PROMINENCE">Ratings</option>
+</select>
 
 
 <div id="mapContainer" style="float: left; width: 70%; height: 100%; position: relative;"></div>
