@@ -172,8 +172,6 @@ function drawRoute(results) {
 			
 			summaryPanel = document.getElementById("directions_panel");
 			summaryPanel.innerHTML = "";
-			 
-			console.log(response.routes[0].waypoint_order);
 			
 			// CHANGES
 			drawMarkers(results, response.routes[0].waypoint_order, start, end);
@@ -195,7 +193,6 @@ function drawMarkers(results, waypoint_order, start, end) {
 		} else if (i === 9) {
 			place = results[i];
 		} else {
-			console.log(waypoint_order[i-1])
 			place = results[waypoint_order[i-1] +1];
 		}
 		createMarker(place, i+1);
