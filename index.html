@@ -2,7 +2,7 @@
 <html style="height: 100%;">
 
 <head>
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=yes" />
 	<style>
     body {
       margin: 0 5px 25px 5px;
@@ -260,11 +260,11 @@ function manualResize(){
 }
 // 
 
-//google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </head>
 
-<body onload="initialize()"; height: 100%;>
+<body>
 <h1>Pubcrawlr Map</h1>
 <label for="search_address">Enter a location for your pub crawl:</label>
  <input type="text" id="search_address" value="" onkeypress="checkEnterPressed(event)"/>
