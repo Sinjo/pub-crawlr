@@ -26,7 +26,7 @@ var map;
 var infowindow;
 var markers = [];
 
-var directionsDisplay = new google.maps.DirectionsRenderer();
+var directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
 var directionsServiceGgl = new google.maps.DirectionsService();
 
 
@@ -154,11 +154,6 @@ function placesCallback(results, status) {
 
 function drawRoute(results) {
 	directionsDisplay.setMap(map);
-	
-	// CHANGES
-	directionsDisplay.suppressMarkers = true;
-	//
-	
 	
 	var start = new google.maps.LatLng(
 		results[0].geometry.location.lat(), results[0].geometry.location.lng());
